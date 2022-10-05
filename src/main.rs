@@ -1,5 +1,23 @@
 fn main() {
-    println!("Hello, world!");
+    print!("a: ");
+    let a: f32 = text_io::read!("{}\n");
+
+    print!("b: ");
+    let b: f32 = text_io::read!("{}\n");
+
+    let interval = b - a;
+    let subintervals = 5;
+    let subinterval_width = interval / subintervals;
+
+    // calculate sum
+    let sum = 0;
+    for i in 0..subintervals {
+        sum += trapezoid_rule(
+            a + (i * subinterval_width),
+            a + ((i + 1) * subinterval_width),
+            3,
+        );
+    }
 }
 
 fn f(x: f32) -> f32 {
