@@ -36,8 +36,8 @@ fn f_prime(x: f32) -> f32 {
 
 fn trapezoid_rule(a: f32, b: f32, threshold: u8) -> f32 {
     assert!(b > a, "Right bound must be greater than left bound");
-    let left = f_prime(a);
-    let right = f_prime(b);
+    let left = f32::abs(f_prime(a));
+    let right = f32::abs(f_prime(b));
     let width = b - a;
     let avg_slope = f32::abs((right - left) / width);
 
