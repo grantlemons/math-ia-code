@@ -17,7 +17,7 @@ fn main() {
         sum += trapezoid_rule(
             a + ((i as f32) * subinterval_width),
             a + ((i + 1) as f32 * subinterval_width),
-            3,
+            0.5,
         );
     }
 
@@ -34,19 +34,19 @@ fn f_prime(x: f32) -> f32 {
     -x * f(x)
 }
 
-fn trapezoid_rule(a: f32, b: f32, threshold: u8) -> f32 {
+fn trapezoid_rule(a: f32, b: f32, threshold: f32) -> f32 {
     assert!(b > a, "Right bound must be greater than left bound");
     let left = f32::abs(f_prime(a));
     let right = f32::abs(f_prime(b));
     let width = b - a;
-    let avg_slope = f32::abs((right - left) / width);
+    let diff = f32::abs(right - left);
 
     // recursively divide
-    if avg_slope >= threshold.into() {
+    if diff.max(threshold) == diff {
         return trapezoid_rule(a, b - (width / 2.0), threshold)
             + trapezoid_rule(a + (width / 2.0), b, threshold);
+    } else {
+        // calculate trapezoidal area
+        (width / 2.0) * (left + right)
     }
-
-    // calculate trapezoidal area
-    (width / 2.0) * (left + right)
 }
