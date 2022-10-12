@@ -42,7 +42,7 @@ fn trapezoid_rule(a: f32, b: f32, threshold: f32) -> f32 {
     let diff = f32::abs(right - left);
 
     // recursively divide
-    if diff.max(threshold) == diff {
+    if diff.max(threshold, diff) == diff {
         return trapezoid_rule(a, b - (width / 2.0), threshold)
             + trapezoid_rule(a + (width / 2.0), b, threshold);
     } else {
