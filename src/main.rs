@@ -16,19 +16,22 @@ fn main() {
     // Check input validity
     assert!(b > a, "Right bound must be greater than left bound");
 
-    let subintervals: u16 = 2;
+    let subintervals: u16 = 4;
+    let mut xcoords: Vec<f32> = vec![b];
 
     // output
-    let (trap_sum, smps_sum) = composite_simple(subintervals, a, b);
+    let (trap_sum, smps_sum) = composite_simple(subintervals, a, b, &mut xcoords);
     println!(
         "Simple Comp Trapezoid Rule: {trap_sum}\nSimple Comp Simpson's 1/3 Rule: {smps_sum}\n"
     );
-
-    let (trap_sum, smps_sum) = composite_established(subintervals, a, b, 0.05);
+    //
+    let (trap_sum, smps_sum) = composite_established(subintervals, a, b, 0.003, &mut xcoords);
     println!("Established Comp Trapezoid Rule: {trap_sum}\nEstablished Comp Simpson's 1/3 Rule: {smps_sum}\n");
 
-    let (trap_sum, smps_sum) = composite_complexity(subintervals, a, b, 0.6);
+    let (trap_sum, smps_sum) = composite_complexity(subintervals, a, b, 0.3, &mut xcoords);
     println!("Complexity Comp Trapezoid Rule: {trap_sum}\nComplexity Comp Simpson's 1/3 Rule: {smps_sum}");
+
+    plotting::draw(xcoords);
 }
 
 fn f(x: f32) -> f32 {
@@ -45,5 +48,5 @@ fn complexity(a: f32, b: f32) -> f32 {
     // Check input validity
     assert!(b > a, "Right bound must be greater than left bound");
 
-    f32::abs(f(b) - f(a))
+    f32::abs(f_prime(b) - f_prime(a))
 }
