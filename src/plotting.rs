@@ -15,13 +15,7 @@ pub fn draw(xcoords: Vec<f32>) {
 
     let x_kps: Vec<_> = (-80..80).map(|x| x as f64 / 20.0).collect();
     ctx.draw_series(LineSeries::new(
-        x_kps.iter().map(|x| {
-            (
-                *x,
-                (13_f64 / f64::sqrt(2_f64 * f64::consts::PI))
-                    * f64::powf(f64::consts::E, -(1_f64 / 2_f64) * f64::powi(*x, 2)),
-            )
-        }),
+        x_kps.iter().map(|x| (*x, crate::f(*x as f32) as f64)),
         &RED,
     ))
     .unwrap()
@@ -32,7 +26,8 @@ pub fn draw(xcoords: Vec<f32>) {
         ctx.draw_series(LineSeries::new(
             y_kps.iter().map(|y| (*x as f64, *y)),
             &BLUE,
-        ));
+        ))
+        .unwrap();
     }
 
     ctx.configure_series_labels()
@@ -40,5 +35,5 @@ pub fn draw(xcoords: Vec<f32>) {
         .background_style(&WHITE.mix(0.8))
         .draw()
         .unwrap();
-    backend.present();
+    backend.present().unwrap();
 }
