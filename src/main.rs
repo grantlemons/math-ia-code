@@ -24,11 +24,11 @@ fn main() {
     // println!(
     //     "Simple Comp Trapezoid Rule: {trap_sum}\nSimple Comp Simpson's 1/3 Rule: {smps_sum}\n"
     // );
-    // //
+
     // let (trap_sum, smps_sum) = composite_established(subintervals, a, b, 0.003, &mut xcoords);
     // println!("Established Comp Trapezoid Rule: {trap_sum}\nEstablished Comp Simpson's 1/3 Rule: {smps_sum}\n");
 
-    let (trap_sum, smps_sum) = composite_complexity(subintervals, a, b, 0.2, &mut xcoords);
+    let (trap_sum, smps_sum) = composite_complexity(subintervals, a, b, 0.3, &mut xcoords);
     println!("Complexity Comp Trapezoid Rule: {trap_sum}\nComplexity Comp Simpson's 1/3 Rule: {smps_sum}");
 
     plotting::draw(xcoords);
