@@ -31,11 +31,15 @@ fn main() {
     let (trap_sum, smps_sum) = composite_complexity(subintervals, a, b, 0.3, &mut xcoords);
     println!("Complexity Comp Trapezoid Rule: {trap_sum}\nComplexity Comp Simpson's 1/3 Rule: {smps_sum}");
 
+    xcoords.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    xcoords.dedup();
+    println!("{:?}", xcoords);
+
     plotting::draw(xcoords);
 }
 
 fn f(x: f32) -> f32 {
-    (13_f32 / f32::sqrt(2_f32 * f32::consts::PI))
+    (10_f32 / f32::sqrt(2_f32 * f32::consts::PI))
         * f32::powf(f32::consts::E, -(1_f32 / 2_f32) * f32::powi(x, 2))
 }
 
