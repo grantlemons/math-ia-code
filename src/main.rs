@@ -17,15 +17,17 @@ fn main() {
     print!("Mode (e/c/s): ");
     let mode: Mode = text_io::read!("{}\n");
 
+    print!("Subdivisions: ");
+    let subdivisions: u16 = text_io::read!("{}\n");
+
     // Check input validity
     assert!(b > a, "Right bound must be greater than left bound");
 
-    let subintervals: u16 = 4;
     let mut xcoords: Vec<f32> = vec![b];
 
-    let (trap_sum, smps_sum) = composite(mode, subintervals, a, b, &mut xcoords);
-    let trap_err = error(trap_sum, 9.999_367);
-    let smps_err = error(smps_sum, 9.999_367);
+    let (trap_sum, smps_sum) = composite(mode, subdivisions, a, b, &mut xcoords);
+    let trap_err = error(trap_sum, 9.999_346);
+    let smps_err = error(smps_sum, 9.999_346);
     println!("{mode} Comp Trapezoid Rule: {trap_sum} ({trap_err}%)\n{mode} Comp Simpson's 1/3 Rule: {smps_sum} ({smps_err}%)");
 
     xcoords.sort_by(|a, b| a.partial_cmp(b).unwrap());
