@@ -47,7 +47,7 @@ fn f_prime(x: f32) -> f32 {
 
 #[allow(dead_code)]
 fn f_prime_prime(x: f32) -> f32 {
-    -f(x) - x * f_prime(x)
+    f(x)*(x.powf(2.0) - 1.0)
 }
 
 fn complexity(a: f32, b: f32) -> f32 {
