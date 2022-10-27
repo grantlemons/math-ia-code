@@ -35,12 +35,21 @@ impl std::str::FromStr for Mode {
     }
 }
 
+impl Mode {
+    pub fn threshold(self) -> f32 {
+        match self {
+            Mode::Established => 0.003,
+            Mode::Complexity => 0.2,
+            _ => 0.0,
+        }
+    }
+}
+
 pub fn composite(
     mode: Mode,
     subints: u16,
     a: f32,
     b: f32,
-    threshold: f32,
     xcoords: &mut Vec<f32>,
 ) -> (f32, f32) {
     // Calculate subinterval width
@@ -65,14 +74,14 @@ pub fn composite(
 
         // Conditions for division dependent on mode parameter
         let condition = match mode {
-            Mode::Established => f32::abs(trap_val - smps_val) > threshold,
-            Mode::Complexity => complexity(left, right) > threshold,
+            Mode::Established => f32::abs(trap_val - smps_val) > mode.threshold(),
+            Mode::Complexity => complexity(left, right) > mode.threshold(),
             Mode::Simple => false,
         };
 
         // Recursively divide if above condition met
         if condition {
-            (trap_val, smps_val) = composite(mode, 2, left, right, threshold, xcoords);
+            (trap_val, smps_val) = composite(mode, 2, left, right, xcoords);
         }
 
         // Add values of local variables to sum variables

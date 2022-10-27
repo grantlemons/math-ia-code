@@ -23,7 +23,7 @@ fn main() {
     let subintervals: u16 = 4;
     let mut xcoords: Vec<f32> = vec![b];
 
-    let (trap_sum, smps_sum) = composite(mode, subintervals, a, b, 0.8, &mut xcoords);
+    let (trap_sum, smps_sum) = composite(mode, subintervals, a, b, &mut xcoords);
     let trap_err = error(trap_sum, 9.999_367);
     let smps_err = error(smps_sum, 9.999_367);
     println!("{mode} Comp Trapezoid Rule: {trap_sum} ({trap_err}%)\n{mode} Comp Simpson's 1/3 Rule: {smps_sum} ({smps_err}%)");
