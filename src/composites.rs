@@ -38,8 +38,8 @@ impl std::str::FromStr for Mode {
 impl Mode {
     pub fn threshold(self) -> f32 {
         match self {
-            Mode::Established => 0.003,
-            Mode::Complexity => 0.2,
+            Mode::Established => 0.002,
+            Mode::Complexity => 0.3,
             _ => 0.0,
         }
     }
