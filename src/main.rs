@@ -13,6 +13,7 @@ fn main() {
     print!("b: ");
     let b: f32 = text_io::read!("{}\n");
 
+    println!("Please enter either 'e', 'c', or 's', for the established method, complexity method, and simple method respectively.");
     print!("Mode (e/c/s): ");
     let mode: Mode = text_io::read!("{}\n");
 

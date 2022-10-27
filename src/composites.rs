@@ -27,7 +27,10 @@ impl std::str::FromStr for Mode {
             "e" => Ok(Mode::Established),
             "c" => Ok(Mode::Complexity),
             "s" => Ok(Mode::Simple),
-            _ => Err(()),
+            _ => {
+                println!("Please enter either 'e', 'c', or 's', for the established method, complexity method, and simple method respectively.");
+                Err(())
+            }
         }
     }
 }
