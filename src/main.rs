@@ -13,23 +13,19 @@ fn main() {
     print!("b: ");
     let b: f32 = text_io::read!("{}\n");
 
+    print!("Mode (e/c/s): ");
+    let mode: Mode = text_io::read!("{}\n");
+
     // Check input validity
     assert!(b > a, "Right bound must be greater than left bound");
 
     let subintervals: u16 = 4;
     let mut xcoords: Vec<f32> = vec![b];
 
-    // output
-    // let (trap_sum, smps_sum) = composite_simple(subintervals, a, b, &mut xcoords);
-    // println!(
-    //     "Simple Comp Trapezoid Rule: {trap_sum}\nSimple Comp Simpson's 1/3 Rule: {smps_sum}\n"
-    // );
-
-    // let (trap_sum, smps_sum) = composite_established(subintervals, a, b, 0.003, &mut xcoords);
-    // println!("Established Comp Trapezoid Rule: {trap_sum}\nEstablished Comp Simpson's 1/3 Rule: {smps_sum}\n");
-
-    let (trap_sum, smps_sum) = composite_complexity(subintervals, a, b, 0.3, &mut xcoords);
-    println!("Complexity Comp Trapezoid Rule: {trap_sum}\nComplexity Comp Simpson's 1/3 Rule: {smps_sum}");
+    let (trap_sum, smps_sum) = composite(mode, subintervals, a, b, 0.8, &mut xcoords);
+    let trap_err = error(trap_sum, 9.999_367);
+    let smps_err = error(smps_sum, 9.999_367);
+    println!("{mode} Comp Trapezoid Rule: {trap_sum} ({trap_err}%)\n{mode} Comp Simpson's 1/3 Rule: {smps_sum} ({smps_err}%)");
 
     xcoords.sort_by(|a, b| a.partial_cmp(b).unwrap());
     xcoords.dedup();
@@ -48,9 +44,18 @@ fn f_prime(x: f32) -> f32 {
     -x * f(x)
 }
 
+#[allow(dead_code)]
+fn f_prime_prime(x: f32) -> f32 {
+    -f(x) - x * f_prime(x)
+}
+
 fn complexity(a: f32, b: f32) -> f32 {
     // Check input validity
     assert!(b > a, "Right bound must be greater than left bound");
 
-    f32::abs(f_prime(b) - f_prime(a))
+    f32::abs(f_prime_prime(b) - f_prime_prime(a))
+}
+
+fn error(value: f32, correct_value: f32) -> f32 {
+    f32::abs(((correct_value - value) / correct_value) * 100.0)
 }
