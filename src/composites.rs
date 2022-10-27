@@ -39,7 +39,7 @@ impl Mode {
     pub fn threshold(self) -> f32 {
         match self {
             Mode::Established => 0.002,
-            Mode::Complexity => 0.3,
+            Mode::Complexity => 0.4,
             _ => 0.0,
         }
     }
@@ -72,7 +72,7 @@ pub fn composite(
         let mut trap_val = trapezoid_rule(left, right);
         let mut smps_val = simpsons_rule(left, right);
 
-        // Conditions for division dependent on mode parameter
+        // Check the conditions for division dependent on mode parameter
         let condition = match mode {
             Mode::Established => f32::abs(trap_val - smps_val) > mode.threshold(),
             Mode::Complexity => complexity(left, right) > mode.threshold(),
