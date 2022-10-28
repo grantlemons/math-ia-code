@@ -25,10 +25,9 @@ fn main() {
 
     let mut xcoords: Vec<f32> = vec![b];
 
-    let (trap_sum, smps_sum) = composite(mode, subdivisions, a, b, &mut xcoords);
-    let trap_err = error(trap_sum, 9.999_346);
-    let smps_err = error(smps_sum, 9.999_346);
-    println!("{mode} Comp Trapezoid Rule: {trap_sum} ({trap_err}%)\n{mode} Comp Simpson's 1/3 Rule: {smps_sum} ({smps_err}%)");
+    let smps_sum = composite(mode, subdivisions, a, b, &mut xcoords);
+    let err = error(smps_sum, 9.999_346);
+    println!("{mode} Comp Simpson's 1/3 Rule: {smps_sum} ({err}%)");
 
     xcoords.sort_by(|a, b| a.partial_cmp(b).unwrap());
     xcoords.dedup();
@@ -49,7 +48,7 @@ fn f_prime(x: f32) -> f32 {
 
 #[allow(dead_code)]
 fn f_prime_prime(x: f32) -> f32 {
-    f(x)*(x.powf(2.0) - 1.0)
+    f(x) * (x.powf(2.0) - 1.0)
 }
 
 fn complexity(a: f32, b: f32) -> f32 {
