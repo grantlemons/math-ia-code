@@ -56,7 +56,7 @@ fn complexity(a: f32, b: f32) -> f32 {
     // Check input validity
     assert!(b > a, "Right bound must be greater than left bound");
 
-    f32::abs(f_prime_prime(b) - f_prime_prime(a))
+    f32::abs(f32::abs(f_prime_prime(b)) - f32::abs(f_prime_prime(a)))
 }
 
 fn error(value: f32, correct_value: f32) -> f32 {
